@@ -1,0 +1,7 @@
+{
+  "name": "Sản phẩm test có danh mục",
+  "description": "Đây là sản phẩm test với danh mục",
+  "price": 75000,
+  "categoryId": 1,
+  "stockQuantity": 5
+}

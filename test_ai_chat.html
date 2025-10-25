@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test AI Chat Integration</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        button { padding: 10px 20px; margin: 5px; }
+        .instructions { background: #f0f0f0; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Test AI Chat Integration</h1>
+    
+    <div class="instructions">
+        <h3>Hướng dẫn test AI Chat:</h3>
+        <ol>
+            <li>Mở <a href="http://localhost:4000" target="_blank">http://localhost:4000</a></li>
+            <li>Đăng nhập vào ứng dụng</li>
+            <li>Trong trang chủ, tìm nút "AI Chat" (màu tím)</li>
+            <li>Nhấp vào nút "AI Chat"</li>
+            <li>Kiểm tra các tính năng:
+                <ul>
+                    <li>Gửi tin nhắn text</li>
+                    <li>Chọn và gửi ảnh</li>
+                    <li>Xóa tất cả tin nhắn</li>
+                    <li>Navigation quay lại</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>Backend Status</h2>
+        <button onclick="testBackend()">Test Backend Connection</button>
+        <div id="backend-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Frontend Status</h2>
+        <button onclick="testFrontend()">Test Frontend Connection</button>
+        <div id="frontend-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>AI Chat Features</h2>
+        <div class="info">
+            <h4>✅ Tính năng đã tích hợp:</h4>
+            <ul>
+                <li>✅ AI Provider với Google Gemini API</li>
+                <li>✅ AI Chat Screen với UI đẹp</li>
+                <li>✅ Gửi tin nhắn text</li>
+                <li>✅ Upload và gửi ảnh</li>
+                <li>✅ Xóa tất cả tin nhắn</li>
+                <li>✅ Navigation từ Home Screen</li>
+                <li>✅ Error handling</li>
+                <li>✅ Loading states</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function testBackend() {
+            const statusDiv = document.getElementById('backend-status');
+            try {
+                const response = await fetch('http://localhost:9000/api/auth/profile');
+                if (response.ok) {
+                    statusDiv.innerHTML = '<span class="success">✅ Backend is running on port 9000</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="error">❌ Backend responded with error: ' + response.status + '</span>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<span class="error">❌ Backend connection failed: ' + error.message + '</span>';
+            }
+        }
+
+        async function testFrontend() {
+            const statusDiv = document.getElementById('frontend-status');
+            try {
+                const response = await fetch('http://localhost:4000');
+                if (response.ok) {
+                    statusDiv.innerHTML = '<span class="success">✅ Frontend is running on port 4000</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="error">❌ Frontend responded with error: ' + response.status + '</span>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<span class="error">❌ Frontend connection failed: ' + error.message + '</span>';
+            }
+        }
+
+        // Auto-run tests on page load
+        window.onload = function() {
+            testBackend();
+            testFrontend();
+        };
+    </script>
+</body>
+</html>
