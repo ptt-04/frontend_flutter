@@ -1,0 +1,7 @@
+{
+  "name": "Sản phẩm test không danh mục",
+  "description": "Đây là sản phẩm test để kiểm tra tính năng nullable category",
+  "price": 50000,
+  "categoryId": null,
+  "stockQuantity": 10
+}

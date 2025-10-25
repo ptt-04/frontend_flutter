@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Profile Functions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Test Profile Functions</h1>
+    
+    <div class="test-section">
+        <h2>Backend Status</h2>
+        <button onclick="testBackend()">Test Backend Connection</button>
+        <div id="backend-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Frontend Status</h2>
+        <button onclick="testFrontend()">Test Frontend Connection</button>
+        <div id="frontend-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Profile API Test</h2>
+        <button onclick="testProfileAPI()">Test Profile API</button>
+        <div id="profile-api-status"></div>
+    </div>
+
+    <script>
+        async function testBackend() {
+            const statusDiv = document.getElementById('backend-status');
+            try {
+                const response = await fetch('http://localhost:9000/api/auth/profile');
+                if (response.ok) {
+                    statusDiv.innerHTML = '<span class="success">✅ Backend is running on port 9000</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="error">❌ Backend responded with error: ' + response.status + '</span>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<span class="error">❌ Backend connection failed: ' + error.message + '</span>';
+            }
+        }
+
+        async function testFrontend() {
+            const statusDiv = document.getElementById('frontend-status');
+            try {
+                const response = await fetch('http://localhost:4000');
+                if (response.ok) {
+                    statusDiv.innerHTML = '<span class="success">✅ Frontend is running on port 4000</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="error">❌ Frontend responded with error: ' + response.status + '</span>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<span class="error">❌ Frontend connection failed: ' + error.message + '</span>';
+            }
+        }
+
+        async function testProfileAPI() {
+            const statusDiv = document.getElementById('profile-api-status');
+            try {
+                // Test without token (should return 401)
+                const response = await fetch('http://localhost:9000/api/auth/profile');
+                if (response.status === 401) {
+                    statusDiv.innerHTML = '<span class="success">✅ Profile API is working (requires authentication)</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="error">❌ Profile API unexpected response: ' + response.status + '</span>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<span class="error">❌ Profile API test failed: ' + error.message + '</span>';
+            }
+        }
+
+        // Auto-run tests on page load
+        window.onload = function() {
+            testBackend();
+            testFrontend();
+            testProfileAPI();
+        };
+    </script>
+</body>
+</html>
